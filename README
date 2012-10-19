@@ -1,11 +1,20 @@
-experimental webservice api adapter
+TREBLEHOOKS
+experimental webservice api adapter with templated webhooks
+
+inspired by the 'templated webhooks' concept coined by webgun.io http://webgun.io/articles/templated-webhooks
+and jeff lindsay's webhooks.org and https://github.com/progrium/miyamoto
+
+INSTALLATION
+install the python packages in requirements.txt
+pip install -r requirements.txt
+
 
 USAGE
 run python mediator.py
 
 run rqworker
 
-then make calls to the queue:
+then make calls to the mediator:
 
 curl -H "Content-Type: application/json" -d '{"adapter_names": "dhis","result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
 
@@ -13,7 +22,9 @@ curl -H "Content-Type: application/json" -d '{"adapter_names": "my_dhis", "resul
 
 curl -H "Content-Type: application/json" -d '{"adapter_names": "foo", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
 
-curl -H "Content-Type: application/json" -d '{"adapter_names": "dhis,foo", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
+curl -H "Content-Type: application/json" -d '{"adapter_names": "dhis,my_dhis,foo", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
 
 
-each api call is adapted based on the configuration and templates in config.py, so the same data (with different adapter_names) can be adapted before forwarding the data to another webservice
+each api call is adapted based on the configuration and mustache templates in config.py -- so the data in a single webhook call (with different adapter_names) can be adapted before being called forward to other webservices. if the caller specifies a `result_callback_url`, the result of each of the adapted webservice calls will be POSTed back to this `result_callback_url`
+TODO some of the adapter code (in adapter.py) is specific to making xml api calls to DHIS2
+TODO allow caller to specify a `result_callback_url` for each adapter
