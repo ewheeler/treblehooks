@@ -25,8 +25,8 @@ def queue():
 @app.route("/dhis/api/", methods=['GET', 'POST'])
 def fake_dhis():
     """
-    curl -H "Content-Type: application/json" -d '{"adapter_names": "dhis_config","result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
-    curl -H "Content-Type: application/json" -d '{"adapter_names": "my_dhis_config", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
+    curl -H "Content-Type: application/json" -d '{"adapter_names": "dhis","result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
+    curl -H "Content-Type: application/json" -d '{"adapter_names": "my_dhis", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
     """
     print request.headers
     print request.data
@@ -35,7 +35,7 @@ def fake_dhis():
 @app.route("/foo/api/", methods=['GET', 'POST'])
 def fake_foo():
     """
-    curl -H "Content-Type: application/json" -d '{"adapter_names": "foo_config", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
+    curl -H "Content-Type: application/json" -d '{"adapter_names": "foo", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
     """
     print request.headers
     print request.json

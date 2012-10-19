@@ -1,4 +1,4 @@
-DHIS_CONFIG = {\
+DHIS = {\
         "protocol" : 'http',
         "domain" : ['localhost'],
         "port" : ":8080",
@@ -18,7 +18,7 @@ DHIS_CONFIG = {\
         "template_type": "xml"
         }
 
-MY_DHIS_CONFIG = {\
+MY_DHIS = {\
         "protocol" : 'http',
         "domain" : ['localhost'],
         "port" : ":8080",
@@ -38,7 +38,7 @@ MY_DHIS_CONFIG = {\
         "template_type": "xml"
         }
 
-FOO_CONFIG = {\
+FOO = {\
         "protocol" : 'http',
         "domain" : ['localhost'],
         "port" : ":8080",

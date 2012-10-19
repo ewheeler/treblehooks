@@ -10,7 +10,7 @@ import dispatcher
 import config
 
 def reconcile_token(adapter, token):
-    if adapter in ['DHIS_CONFIG']:
+    if adapter in ['DHIS']:
         TOKEN_MAP = {'foo': 'bar', 'wat': 'who'}
     else:
         TOKEN_MAP = {'foo': 'FOO', 'wat': 'WAT'}
