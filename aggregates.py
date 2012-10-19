@@ -1,6 +1,5 @@
 import json
 
-from gevent import wsgi
 from flask import Flask, request, jsonify
 
 from redis import Redis
@@ -24,7 +23,8 @@ def queue():
 @app.route("/dhis/api/", methods=['GET', 'POST'])
 def fake_dhis():
     """
-    curl -H "Content-Type: application/json" -d '{"url": "http://localhost:8080/", "adapter_config": "dhis_config", "adapter": "dhis_xml", "result_callack_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}, "countdown": "7"}' http://localhost:8080/queue/
+    curl -H "Content-Type: application/json" -d '{"adapter_config": "dhis_config","result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
+    curl -H "Content-Type: application/json" -d '{"adapter_config": "my_dhis_config", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
     """
     print request.headers
     print request.data
@@ -33,7 +33,7 @@ def fake_dhis():
 @app.route("/foo/api/", methods=['GET', 'POST'])
 def fake_foo():
     """
-    curl -H "Content-Type: application/json" -d '{"url": "http://localhost:8080/", "adapter_config": foo_config", "adapter": "foo_json", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}, "countdown": "7"}' http://localhost:8080/queue/
+    curl -H "Content-Type: application/json" -d '{"adapter_config": "foo_config", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}}' http://localhost:8080/queue/
     """
     print request.headers
     print request.json
@@ -46,5 +46,6 @@ def fake_callback():
     print request.data
     return jsonify({'status': 'success'})
 
-print 'Serving on 8080...'
-wsgi.WSGIServer(('', 8080), app).serve_forever()
+if __name__ == '__main__':
+    print 'Serving on 8080...'
+    app.run(host='0.0.0.0', port=8080)
