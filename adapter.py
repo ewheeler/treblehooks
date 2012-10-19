@@ -18,13 +18,13 @@ def reconcile_token(adapter, token):
     return TOKEN_MAP[token]
 
 class Adapter(object):
-    def __init__(self, params, adapter_config):
-        if adapter_config is not None:
-            if hasattr(config, adapter_config.upper()):
-                self.config = getattr(config, adapter_config.upper())
+    def __init__(self, params, adapter_name):
+        if adapter_name is not None:
+            if hasattr(config, adapter_name.upper()):
+                self.config = getattr(config, adapter_name.upper())
         else:
-            raise dispatcher.TaskFailure('No adapter configuration named: %s' % adapter_config)
-        self.adapter = adapter_config.upper()
+            raise dispatcher.TaskFailure('No adapter configuration named: %s' % adapter_name)
+        self.adapter = adapter_name.upper()
         self.uri = uritemplate.expand(config.URI_TEMPLATE, self.config)
         self.data = self._reconcile_tokens(params)
         self.payload = self._build_payload()
