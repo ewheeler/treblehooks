@@ -1,3 +1,5 @@
+import json
+
 from gevent import wsgi
 from flask import Flask, request, jsonify
 
@@ -34,7 +36,8 @@ def fake_foo():
     curl -H "Content-Type: application/json" -d '{"url": "http://localhost:8080/", "adapter_config": foo_config", "adapter": "foo_json", "result_callback_url": "http://localhost:8080/callback/", "params": {"week": "42", "data": [{"type": "wat", "slug": "foo", "value": "8"}], "facility": "foo"}, "countdown": "7"}' http://localhost:8080/queue/
     """
     print request.headers
-    print request.data
+    print request.json
+    data = request.json.get('data')
     return jsonify({'status': 'success'})
 
 @app.route("/callback/", methods=['GET', 'POST'])
